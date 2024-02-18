@@ -15,12 +15,19 @@ public class ProjectController {
     @GetMapping("projects")
     Map<String, Object> getProjects() {
         Date now = new Date();  // Replace this with your actual Date object
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(now);
+        calendar.add(Calendar.DAY_OF_YEAR, -1);
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yy");
-        String nowF = dateFormat.format(now);
-        Project p1 = new Project("n1","desc","man", nowF,nowF);
-        Project p2 = new Project("n2","desc","man", nowF,nowF);
-        Project p3 = new Project("n3","desc","man", nowF,nowF);
+        now = calendar.getTime();
+        SimpleDateFormat dateFormatUp = new SimpleDateFormat("dd MMM yy HH:mm");
+        SimpleDateFormat dateFormatCr = new SimpleDateFormat("dd MMM yy");
+        String nowUp = dateFormatUp.format(now);
+        String nowCr = dateFormatCr.format(now);
+
+        Project p1 = new Project("n1","desc","man", nowUp, nowCr);
+        Project p2 = new Project("n2","desc","man", nowUp, nowCr);
+        Project p3 = new Project("n3","desc","man", nowUp, nowCr);
         p1.setId(1L);
         p2.setId(2L);
         p3.setId(3L);
