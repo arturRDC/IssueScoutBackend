@@ -53,7 +53,15 @@ public class ProjectController {
 //        projectService.addUserToProject(projectId, userId);
         return "User added to project successfully";
     }
+    ///api/projects/${id}/changeRole/${userId}/${role}
 
+    @CrossOrigin(origins = "*")
+    @PostMapping("/{projectId}/changeRole/{userId}/{role}")
+    public String addUserToProject(@PathVariable Long projectId, @PathVariable Long userId, @PathVariable String role) {
+        System.out.println("user " + userId+ " in project " + projectId + " changed role to " + role);
+//        projectService.changeUserRole(projectId, userId, role);
+        return "User changed role successfully";
+    }
     @CrossOrigin(origins = "*")
     @DeleteMapping("/{id}/delete")
     public ResponseEntity<String> deleteProject(@PathVariable("id") Long id) {
