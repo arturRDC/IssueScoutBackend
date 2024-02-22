@@ -10,8 +10,9 @@ public class TicketDTO {
     private String priority;
     private String difficulty;
     private String attachment;
+    private String type;
 
-    public TicketDTO(Long id, String title, String desc, UserDTO assignedTo, String priority, String difficulty, String attachment) {
+    public TicketDTO(Long id, String title, String desc, UserDTO assignedTo, String priority, String difficulty, String attachment, String type) {
         this.id = id;
         this.title = title;
         this.desc = desc;
@@ -19,6 +20,7 @@ public class TicketDTO {
         this.priority = priority;
         this.difficulty = difficulty;
         this.attachment = attachment;
+        this.type = type;
     }
 
     public TicketDTO() {
@@ -78,5 +80,13 @@ public class TicketDTO {
 
     public void setAttachment(String attachment) {
         this.attachment = attachment;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
