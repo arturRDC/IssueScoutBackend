@@ -38,6 +38,14 @@ public class TicketController {
         return ticket;
     }
 
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/{id}")
+    public void deleteTicket(@PathVariable Long id) {
+
+//        TicketDTO ticket = new TicketDTO(1L, "Fix login bug", "Username escape characters", new UserDTO(1L, "John Doe"), "High", "Medium", "example.png", "Bug");
+        System.out.println("deleted ticket with id " + id);
+    }
+
 
 
 
