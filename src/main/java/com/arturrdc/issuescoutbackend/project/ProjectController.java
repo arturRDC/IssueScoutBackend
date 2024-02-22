@@ -1,5 +1,6 @@
 package com.arturrdc.issuescoutbackend.project;
 
+import com.arturrdc.issuescoutbackend.user.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -69,4 +70,30 @@ public class ProjectController {
         System.out.println("project "+ id + " deleted");
         return new ResponseEntity<>("Project with ID " + id + " has been deleted.", HttpStatus.OK);
     }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/{projectId}/addTicket")
+    public ResponseEntity<String> addTicketToProject(@PathVariable Long projectId) {
+        System.out.println("ticket added to project " + projectId);
+        return ResponseEntity.ok("");
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/{projectId}/tickets")
+    public Map<String, Object> getProjectTickets(@PathVariable Long projectId) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yy HH:mm");
+
+        TicketDTO[] tickets = new TicketDTO[]{
+                new TicketDTO(1L, "Fix login bug", "bug", "High", "Medium", new UserDTO(1L,"John Doe"), "open", dateFormat.format(new Date())),
+                new TicketDTO(2L, "Add dark mode feature", "feature", "Low", "High", new UserDTO(2L,"Jane Smith"), "in progress", dateFormat.format(new Date())),
+                new TicketDTO(3L, "User feedback on UI", "comment", "Medium", "Low", new UserDTO(3L,"Alex Jones"), "closed", dateFormat.format(new Date())),
+                new TicketDTO(4L, "Request for API access", "request", "High", "Medium", new UserDTO(4L,"Sam Wilson"), "open", dateFormat.format(new Date()))
+        };
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("data", tickets);
+        return response;
+    }
+
+
 }
