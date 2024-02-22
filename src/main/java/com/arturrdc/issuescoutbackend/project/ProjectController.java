@@ -1,9 +1,7 @@
 package com.arturrdc.issuescoutbackend.project;
 
 import com.arturrdc.issuescoutbackend.user.UserDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -83,11 +81,11 @@ public class ProjectController {
     public Map<String, Object> getProjectTickets(@PathVariable Long projectId) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yy HH:mm");
 
-        TicketDTO[] tickets = new TicketDTO[]{
-                new TicketDTO(1L, "Fix login bug", "bug", "High", "Medium", new UserDTO(1L,"John Doe"), "open", dateFormat.format(new Date())),
-                new TicketDTO(2L, "Add dark mode feature", "feature", "Low", "High", new UserDTO(2L,"Jane Smith"), "in progress", dateFormat.format(new Date())),
-                new TicketDTO(3L, "User feedback on UI", "comment", "Medium", "Low", new UserDTO(3L,"Alex Jones"), "closed", dateFormat.format(new Date())),
-                new TicketDTO(4L, "Request for API access", "request", "High", "Medium", new UserDTO(4L,"Sam Wilson"), "open", dateFormat.format(new Date()))
+        TicketProjectDTO[] tickets = new TicketProjectDTO[]{
+                new TicketProjectDTO(1L, "Fix login bug", "bug", "High", "Medium", new UserDTO(1L,"John Doe"), "open", dateFormat.format(new Date())),
+                new TicketProjectDTO(2L, "Add dark mode feature", "feature", "Low", "High", new UserDTO(2L,"Jane Smith"), "in progress", dateFormat.format(new Date())),
+                new TicketProjectDTO(3L, "User feedback on UI", "comment", "Medium", "Low", new UserDTO(3L,"Alex Jones"), "closed", dateFormat.format(new Date())),
+                new TicketProjectDTO(4L, "Request for API access", "request", "High", "Medium", new UserDTO(4L,"Sam Wilson"), "open", dateFormat.format(new Date()))
         };
 
         Map<String, Object> response = new HashMap<>();

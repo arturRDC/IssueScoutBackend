@@ -2,7 +2,7 @@ package com.arturrdc.issuescoutbackend.project;
 
 import com.arturrdc.issuescoutbackend.user.UserDTO;
 
-public class TicketDTO {
+public class TicketProjectDTO {
     public Long id;
     public String title;
     public String type;
@@ -12,7 +12,7 @@ public class TicketDTO {
     public String status;
     public String updatedAt;
 
-    public TicketDTO(Long id, String title, String type, String priority, String difficulty, UserDTO assignedTo, String status, String updatedAt) {
+    public TicketProjectDTO(Long id, String title, String type, String priority, String difficulty, UserDTO assignedTo, String status, String updatedAt) {
         this.id = id;
         this.title = title;
         this.type = type;
@@ -23,7 +23,7 @@ public class TicketDTO {
         this.updatedAt = updatedAt;
     }
 
-    public TicketDTO() {
+    public TicketProjectDTO() {
     }
 
     public Long getId() {
