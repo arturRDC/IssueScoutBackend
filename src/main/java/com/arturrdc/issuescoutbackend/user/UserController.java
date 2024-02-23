@@ -34,18 +34,12 @@ public class UserController {
 
 
 
-        User u1 = new User("Artur");
-        User u2 = new User("Barbara");
-        User u3 = new User("Carlos");
-        u1.setId(1L);
-        u2.setId(2L);
-        u3.setId(3L);
-        userService.saveUser(u1);
-        userService.saveUser(u2);
-        userService.saveUser(u3);
+        UserDTO u1 = new UserDTO(1L,"Artur");
+        UserDTO u2 = new UserDTO(2L,"Barbara");
+        UserDTO u3 = new UserDTO(3L,"Carlos");
         List<UserDTO> uItems = userService.getUsers();
         Map<String, Object> response = new HashMap<>();
-        response.put("data", uItems);
+        response.put("data", new UserDTO[]{u1,u2,u3});
         return response;
     }
 
