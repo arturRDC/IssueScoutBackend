@@ -28,10 +28,12 @@ public class TicketController {
 
         TicketDTO ticket = new TicketDTO(1L, "Fix login bug", "Username escape characters", new UserDTO(1L, "John Doe"), "High", "Medium", "Bug", "Jane Smith", "Open", "21 May 24","21 May 24 14:59");
         AttachmentDTO[] attachments = {new AttachmentDTO(1L, "image.png", "/static/images/image.png"), new AttachmentDTO(2L, "image2.png", "/static/images/image2.png")};
+        HistoryDTO[] history = {new HistoryDTO("22 May 24 11:55","description", "desc1","desc2"), new HistoryDTO("23 May 24 11:55","title", "Fix login","Fix login bug")};
         Map<String, Object> response = new HashMap<>();
         response.put("details", ticket);
         response.put("comments", new CommentDTO[]{new CommentDTO("comment1", "John Doe", "21 May 24 16:59"), new CommentDTO("comment2", "Jane Smith", "21 May 24 17:10") });
         response.put("attachments", attachments);
+        response.put("history", history);
         return response;
     }
     @CrossOrigin(origins = "*")
@@ -67,6 +69,9 @@ public class TicketController {
         System.out.println("attachment " + attId + " in project " + id + " deleted");
         return ResponseEntity.status(HttpStatus.OK).body("");
     }
+
+
+
 
 
 
