@@ -9,21 +9,19 @@ public class TicketDTO {
     private UserDTO assignedTo;
     private String priority;
     private String difficulty;
-    private String attachment;
     private String type;
     private String submittedBy;
     private String status;
     private String createdAt;
     private String updatedAt;
 
-    public TicketDTO(Long id, String title, String desc, UserDTO assignedTo, String priority, String difficulty, String attachment, String type, String submittedBy, String status, String createdAt, String updatedAt) {
+    public TicketDTO(Long id, String title, String desc, UserDTO assignedTo, String priority, String difficulty, String type, String submittedBy, String status, String createdAt, String updatedAt) {
         this.id = id;
         this.title = title;
         this.desc = desc;
         this.assignedTo = assignedTo;
         this.priority = priority;
         this.difficulty = difficulty;
-        this.attachment = attachment;
         this.type = type;
         this.submittedBy = submittedBy;
         this.status = status;
@@ -84,13 +82,6 @@ public class TicketDTO {
         this.difficulty = difficulty;
     }
 
-    public String getAttachment() {
-        return attachment;
-    }
-
-    public void setAttachment(String attachment) {
-        this.attachment = attachment;
-    }
 
     public String getType() {
         return type;

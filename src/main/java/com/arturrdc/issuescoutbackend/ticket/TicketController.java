@@ -26,17 +26,19 @@ public class TicketController {
     @GetMapping("/{id}")
     public Map<String, Object> getTicket(@PathVariable Long id) {
 
-        TicketDTO ticket = new TicketDTO(1L, "Fix login bug", "Username escape characters", new UserDTO(1L, "John Doe"), "High", "Medium", "example.png", "Bug", "Jane Smith", "Open", "21 May 24","21 May 24 14:59");
+        TicketDTO ticket = new TicketDTO(1L, "Fix login bug", "Username escape characters", new UserDTO(1L, "John Doe"), "High", "Medium", "Bug", "Jane Smith", "Open", "21 May 24","21 May 24 14:59");
+        AttachmentDTO[] attachments = {new AttachmentDTO(1L, "image.png", "/static/images/image.png"), new AttachmentDTO(2L, "image2.png", "/static/images/image2.png")};
         Map<String, Object> response = new HashMap<>();
         response.put("details", ticket);
         response.put("comments", new CommentDTO[]{new CommentDTO("comment1", "John Doe", "21 May 24 16:59"), new CommentDTO("comment2", "Jane Smith", "21 May 24 17:10") });
+        response.put("attachments", attachments);
         return response;
     }
     @CrossOrigin(origins = "*")
     @PostMapping("/{id}")
     public TicketDTO editTicket(@PathVariable Long id) {
 
-        TicketDTO ticket = new TicketDTO(1L, "Fix login bug", "Username escape characters", new UserDTO(1L, "John Doe"), "High", "Medium", "example.png", "Bug", "Jane Smith", "Open","21 May 24","21 May 24 14:59");
+        TicketDTO ticket = new TicketDTO(1L, "Fix login bug", "Username escape characters", new UserDTO(1L, "John Doe"), "High", "Medium", "Bug", "Jane Smith", "Open","21 May 24","21 May 24 14:59");
 
         return ticket;
     }
@@ -57,6 +59,16 @@ public class TicketController {
         System.out.println("Added a new comment in project " + id);
         return ResponseEntity.status(HttpStatus.CREATED).body(commentDTO);
     }
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/{id}/attachments/{attId}")
+    public ResponseEntity<String> getAttachments(@PathVariable Long id, @PathVariable Long attId) {
+
+//        TicketDTO ticket = new TicketDTO(1L, "Fix login bug", "Username escape characters", new UserDTO(1L, "John Doe"), "High", "Medium", "example.png", "Bug", "Jane Smith", "Open","21 May 24","21 May 24 14:59");
+        System.out.println("attachment " + attId + " in project " + id + " deleted");
+        return ResponseEntity.status(HttpStatus.OK).body("");
+    }
+
+
 
 
 
