@@ -11,8 +11,12 @@ public class TicketDTO {
     private String difficulty;
     private String attachment;
     private String type;
+    private String submittedBy;
+    private String status;
+    private String createdAt;
+    private String updatedAt;
 
-    public TicketDTO(Long id, String title, String desc, UserDTO assignedTo, String priority, String difficulty, String attachment, String type) {
+    public TicketDTO(Long id, String title, String desc, UserDTO assignedTo, String priority, String difficulty, String attachment, String type, String submittedBy, String status, String createdAt, String updatedAt) {
         this.id = id;
         this.title = title;
         this.desc = desc;
@@ -21,7 +25,13 @@ public class TicketDTO {
         this.difficulty = difficulty;
         this.attachment = attachment;
         this.type = type;
+        this.submittedBy = submittedBy;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
+
+
 
     public TicketDTO() {
     }
@@ -88,5 +98,37 @@ public class TicketDTO {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getSubmittedBy() {
+        return submittedBy;
+    }
+
+    public void setSubmittedBy(String submittedBy) {
+        this.submittedBy = submittedBy;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }
