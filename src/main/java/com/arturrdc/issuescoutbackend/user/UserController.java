@@ -52,7 +52,7 @@ public class UserController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("")
-    public Map<String, Object> getTeamMembers() {
+    public Map<String, Object> getUsers() {
         TeamMember[] teamMembers = new TeamMember[] {
                 new TeamMember("1","Alex", "https://reqres.in/img/faces/1-image.jpg", "alex@dashwind.com", "Developer", "19 May 2024", "5 hr ago"),
                 new TeamMember("2","Ereena", "https://reqres.in/img/faces/2-image.jpg", "ereena@dashwind.com", "Developer", "18 May 2024", "15 min ago"),

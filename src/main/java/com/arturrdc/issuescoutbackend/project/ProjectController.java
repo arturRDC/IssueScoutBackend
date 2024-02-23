@@ -1,5 +1,6 @@
 package com.arturrdc.issuescoutbackend.project;
 
+import com.arturrdc.issuescoutbackend.user.TeamMember;
 import com.arturrdc.issuescoutbackend.user.UserDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -90,6 +91,22 @@ public class ProjectController {
 
         Map<String, Object> response = new HashMap<>();
         response.put("data", tickets);
+        return response;
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/{id}/users")
+    public Map<String, Object> getTeamMembers() {
+        TeamMember[] teamMembers = new TeamMember[] {
+                new TeamMember("1","Alex", "https://reqres.in/img/faces/1-image.jpg", "alex@dashwind.com", "Developer", "19 May 2024", "5 hr ago"),
+                new TeamMember("2","Ereena", "https://reqres.in/img/faces/2-image.jpg", "ereena@dashwind.com", "Developer", "18 May 2024", "15 min ago"),
+                new TeamMember("3","John", "https://reqres.in/img/faces/3-image.jpg", "john@dashwind.com", "Developer", "17 May 2024", "20 hr ago"),
+                new TeamMember("4","Matrix", "https://reqres.in/img/faces/4-image.jpg", "matrix@dashwind.com", "Manager", "16 May 2024", "1 hr ago"),
+                new TeamMember("5","Virat", "https://reqres.in/img/faces/5-image.jpg", "virat@dashwind.com", "Submitter", "15 May 2024", "40 min ago"),
+                new TeamMember("6","Miya", "https://reqres.in/img/faces/6-image.jpg", "miya@dashwind.com", "Submitter", "13 May 2024", "5 hr ago")
+        };
+        Map<String, Object> response = new HashMap<>();
+        response.put("data", teamMembers);
         return response;
     }
 
