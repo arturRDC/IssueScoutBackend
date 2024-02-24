@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
-
+//@CrossOrigin(origins = "http://localhost:3000",maxAge = 3600, allowCredentials = "true", exposedHeaders = {"Access-Control-Allow-Origin","Access-Control-Allow-Credentials"})
 @RestController
 @RequestMapping("/api/projects")
 public class ProjectController {
@@ -20,7 +20,7 @@ public class ProjectController {
     }
 
 
-    @CrossOrigin(origins = "*")
+
     @GetMapping("")
     public Map<String, Object> getProjects() {
         Date now = new Date();  // Replace this with your actual Date object
@@ -46,7 +46,7 @@ public class ProjectController {
         return response;
     }
 
-    @CrossOrigin(origins = "*")
+
     @PostMapping("/{projectId}/addUser/{userId}")
     public String addUserToProject(@PathVariable Long projectId, @PathVariable Long userId) {
         System.out.println("user " + userId+ " added to project " + projectId);
@@ -55,14 +55,14 @@ public class ProjectController {
     }
     ///api/projects/${id}/changeRole/${userId}/${role}
 
-    @CrossOrigin(origins = "*")
+
     @PostMapping("/{projectId}/changeRole/{userId}/{role}")
     public String addUserToProject(@PathVariable Long projectId, @PathVariable Long userId, @PathVariable String role) {
         System.out.println("user " + userId+ " in project " + projectId + " changed role to " + role);
 //        projectService.changeUserRole(projectId, userId, role);
         return "User changed role successfully";
     }
-    @CrossOrigin(origins = "*")
+
     @DeleteMapping("/{id}/delete")
     public ResponseEntity<String> deleteProject(@PathVariable("id") Long id) {
         // ProjectService.deleteProject(id);
@@ -70,14 +70,14 @@ public class ProjectController {
         return new ResponseEntity<>("Project with ID " + id + " has been deleted.", HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "*")
+
     @PostMapping("/{projectId}/addTicket")
     public ResponseEntity<String> addTicketToProject(@PathVariable Long projectId) {
         System.out.println("ticket added to project " + projectId);
         return ResponseEntity.ok("");
     }
 
-    @CrossOrigin(origins = "*")
+
     @GetMapping("/{projectId}/tickets")
     public Map<String, Object> getProjectTickets(@PathVariable Long projectId) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yy HH:mm");
@@ -94,7 +94,7 @@ public class ProjectController {
         return response;
     }
 
-    @CrossOrigin(origins = "*")
+
     @GetMapping("/{id}/users")
     public Map<String, Object> getTeamMembers() {
         TeamMember[] teamMembers = new TeamMember[] {

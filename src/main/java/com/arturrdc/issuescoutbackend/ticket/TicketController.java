@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
-
+@CrossOrigin(origins = "http://localhost:3000",maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping("/api/tickets")
 public class TicketController {
@@ -23,7 +23,7 @@ public class TicketController {
     }
 
 
-    @CrossOrigin(origins = "*")
+
     @GetMapping("/{id}")
     public Map<String, Object> getTicket(@PathVariable Long id) {
 
@@ -37,7 +37,7 @@ public class TicketController {
         response.put("history", history);
         return response;
     }
-    @CrossOrigin(origins = "*")
+
     @PostMapping("/{id}")
     public TicketDTO editTicket(@PathVariable Long id) {
 
@@ -46,7 +46,7 @@ public class TicketController {
         return ticket;
     }
 
-    @CrossOrigin(origins = "*")
+
     @DeleteMapping("/{id}")
     public void deleteTicket(@PathVariable Long id) {
 
@@ -54,7 +54,7 @@ public class TicketController {
         System.out.println("deleted ticket with id " + id);
     }
 
-    @CrossOrigin(origins = "*")
+
     @PostMapping("/{id}/comments")
     public ResponseEntity<CommentDTO> addComment(@PathVariable Long id, @RequestBody CommentDTO commentDTO) {
 
@@ -62,7 +62,7 @@ public class TicketController {
         System.out.println("Added a new comment in project " + id);
         return ResponseEntity.status(HttpStatus.CREATED).body(commentDTO);
     }
-    @CrossOrigin(origins = "*")
+
     @DeleteMapping("/{id}/attachments/{attId}")
     public ResponseEntity<String> getAttachments(@PathVariable Long id, @PathVariable Long attId) {
 
@@ -71,7 +71,7 @@ public class TicketController {
         return ResponseEntity.status(HttpStatus.OK).body("");
     }
 
-    @CrossOrigin(origins = "*")
+
     @GetMapping("")
     public Map<String, Object> getTickets() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yy HH:mm");

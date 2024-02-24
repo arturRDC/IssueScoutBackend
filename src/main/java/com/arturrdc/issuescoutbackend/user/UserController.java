@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
-
+@CrossOrigin(origins = "http://localhost:3000",maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -28,7 +28,7 @@ public class UserController {
 //                "Miya,https://reqres.in/img/faces/6-image.jpg,miya@dashwind.com,Submitter,13 May 2024,5 hr ago"
 //    };
 
-    @CrossOrigin(origins = "*")
+
     @GetMapping("names")
     Map<String, Object> getUserNames() {
 
@@ -44,7 +44,7 @@ public class UserController {
     }
 
 
-    @CrossOrigin(origins = "*")
+
     @GetMapping("")
     public Map<String, Object> getUsers() {
         TeamMember[] teamMembers = new TeamMember[] {
