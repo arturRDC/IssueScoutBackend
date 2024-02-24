@@ -1,6 +1,7 @@
 package com.arturrdc.issuescoutbackend.security;
 
 import com.arturrdc.issuescoutbackend.security.jwt.AuthEntryPointJwt;
+import com.arturrdc.issuescoutbackend.security.jwt.AuthTokenFilter;
 import com.arturrdc.issuescoutbackend.security.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -43,6 +44,7 @@ public class WebSecurityConfig {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
+        return authProvider;
     }
 
     @Bean
