@@ -43,11 +43,14 @@ public class User {
     @Size(min=2,max=30)
     private String name;
 
-    public User(String username, String email, String password, String name) {
+    private String profilePicture;
+
+    public User(String username, String email, String password, String name, String profilePicture) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.name = name;
+        this.profilePicture = profilePicture;
     }
 
     public User() {
@@ -102,5 +105,13 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
     }
 }
