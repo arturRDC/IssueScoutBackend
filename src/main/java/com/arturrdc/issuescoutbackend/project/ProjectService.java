@@ -1,8 +1,11 @@
 package com.arturrdc.issuescoutbackend.project;
 
+import com.arturrdc.issuescoutbackend.project.payload.request.EditProjectRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,19 +30,26 @@ public class ProjectService {
         return projectRepository.save(project);
     }
 
-    public Project updateProject(Long id, Project projectDetails) {
-        return projectRepository.findById(id).map(project -> {
-            project.setName(projectDetails.getName());
-            project.setUpdatedAt(projectDetails.getUpdatedAt());
-            project.setManager(projectDetails.getManager());
-            project.setCreatedAt(projectDetails.getCreatedAt());
-            project.setMembers(projectDetails.getMembers());
-            project.setTickets(projectDetails.getTickets());
-            return projectRepository.save(project);
-        }).orElseThrow(() -> new RuntimeException("Project not found with id " + id));
+    public Project updateProject(Long id, EditProjectRequest editProjectRequest) {
+        Project project = projectRepository.findById(id).get();
+
+        project.setName(editProjectRequest.getName());
+        project.setDesc(editProjectRequest.getDesc());
+        project = setUpdatedAt(project);
+        projectRepository.save(project);
+
+        return project;
     }
 
     public void deleteProject(Long id) {
         projectRepository.deleteById(id);
+    }
+
+    public Project setUpdatedAt(Project project) {
+        Date unformattedNow = new Date();
+        SimpleDateFormat df = new SimpleDateFormat("dd MMM yy HH:mm");
+        String now = df.format(unformattedNow);
+        project.setUpdatedAt(now);
+        return project;
     }
 }

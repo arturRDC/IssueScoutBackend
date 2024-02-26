@@ -1,6 +1,7 @@
 package com.arturrdc.issuescoutbackend.user;
 
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -104,7 +105,6 @@ public class UserService {
         // Return the URL of the saved file
         return baseUrl + "/files/avatars/" + fileName;
     }
-
     public void setLastActive(String username) {
         Optional<User> userOptional = userRepository.findByUsername(username);
         Date unformattedNow = new Date();
@@ -114,4 +114,5 @@ public class UserService {
         user.setLastActive(now);
         userRepository.save(user);
     }
+
 }

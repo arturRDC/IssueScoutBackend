@@ -1,4 +1,4 @@
-package com.arturrdc.issuescoutbackend.project;
+package com.arturrdc.issuescoutbackend.project.payload.response;
 
 import com.arturrdc.issuescoutbackend.ticket.Ticket;
 import com.arturrdc.issuescoutbackend.user.User;

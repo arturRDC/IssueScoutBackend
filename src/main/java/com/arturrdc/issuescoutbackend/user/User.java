@@ -6,6 +6,9 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -48,13 +51,23 @@ public class User {
     private String joinedOn;
     private String lastActive;
 
-    public User(String username, String email, String password, String name, String profilePicture, String joinedOn) {
+    public User(String username, String email, String password, String name, String profilePicture) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.name = name;
         this.profilePicture = profilePicture;
-        this.joinedOn = joinedOn;
+        Date now = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(now);
+
+        now = calendar.getTime();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yy");
+        SimpleDateFormat dateFormatPrecise = new SimpleDateFormat("dd MMM yy HH:mm");
+        String nowStr = dateFormat.format(now);
+        String nowStrPrecise = dateFormatPrecise.format(now);
+        this.joinedOn = nowStr;
+        this.lastActive = nowStrPrecise;
     }
 
     public User() {

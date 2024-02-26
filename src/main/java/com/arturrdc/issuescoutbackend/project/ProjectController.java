@@ -1,11 +1,11 @@
 package com.arturrdc.issuescoutbackend.project;
 
 import com.arturrdc.issuescoutbackend.mapper.MapperService;
+import com.arturrdc.issuescoutbackend.project.payload.request.EditProjectRequest;
+import com.arturrdc.issuescoutbackend.project.payload.request.NewProjectRequest;
+import com.arturrdc.issuescoutbackend.project.payload.response.ProjectResponse;
 import com.arturrdc.issuescoutbackend.user.UserListDTO;
 import com.arturrdc.issuescoutbackend.user.UserSelectionDTO;
-import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -42,13 +42,15 @@ public class ProjectController {
 
     @PostMapping("")
     public ResponseEntity<NewProjectRequest> addProject(@Validated @ModelAttribute NewProjectRequest newProjectRequest) {
-        System.out.println("newProjectRequest.getName()");
-        System.out.println(newProjectRequest.getName());
-        System.out.println("newProjectRequest.getDesc()");
-        System.out.println(newProjectRequest.getDesc());
-        Project newProject = mapperService.mapNewProjectReqToRes(newProjectRequest);
+        Project newProject = mapperService.mapNewProjectReqToProject(newProjectRequest);
         projectService.createProject(newProject);
         return ResponseEntity.status(HttpStatus.CREATED).body(newProjectRequest);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<EditProjectRequest> addProject(@PathVariable Long id, @Validated @ModelAttribute EditProjectRequest editProjectRequest) {
+        projectService.updateProject(id, editProjectRequest);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(editProjectRequest);
     }
 
 
@@ -60,11 +62,10 @@ public class ProjectController {
 //        projectService.addUserToProject(projectId, userId);
         return "User added to project successfully";
     }
-    ///api/projects/${id}/changeRole/${userId}/${role}
 
 
     @PostMapping("/{projectId}/changeRole/{userId}/{role}")
-    public String addUserToProject(@PathVariable Long projectId, @PathVariable Long userId, @PathVariable String role) {
+    public String changeRole(@PathVariable Long projectId, @PathVariable Long userId, @PathVariable String role) {
         System.out.println("user " + userId+ " in project " + projectId + " changed role to " + role);
 //        projectService.changeUserRole(projectId, userId, role);
         return "User changed role successfully";

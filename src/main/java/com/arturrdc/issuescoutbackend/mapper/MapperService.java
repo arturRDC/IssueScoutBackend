@@ -1,12 +1,13 @@
 package com.arturrdc.issuescoutbackend.mapper;
 
-import com.arturrdc.issuescoutbackend.project.NewProjectRequest;
+import com.arturrdc.issuescoutbackend.project.ProjectService;
+import com.arturrdc.issuescoutbackend.project.payload.request.EditProjectRequest;
+import com.arturrdc.issuescoutbackend.project.payload.request.NewProjectRequest;
 import com.arturrdc.issuescoutbackend.project.Project;
-import com.arturrdc.issuescoutbackend.project.ProjectResponse;
+import com.arturrdc.issuescoutbackend.project.payload.response.ProjectResponse;
 import com.arturrdc.issuescoutbackend.ticket.Ticket;
 import com.arturrdc.issuescoutbackend.user.User;
 import com.arturrdc.issuescoutbackend.user.UserListDTO;
-import com.arturrdc.issuescoutbackend.user.UserSelectionDTO;
 import com.arturrdc.issuescoutbackend.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,9 +22,12 @@ import java.util.stream.Collectors;
 public class MapperService {
     final
     UserService userService;
+    final
+    ProjectService projectService;
 
-    public MapperService(UserService userService) {
+    public MapperService(UserService userService, ProjectService projectService) {
         this.userService = userService;
+        this.projectService = projectService;
     }
 
     public UserListDTO mapUserToDTO(User user) {
@@ -60,11 +64,10 @@ public class MapperService {
                 .collect(Collectors.toList());
     }
 
-    public Project mapNewProjectReqToRes(NewProjectRequest newProjectRequest) {
+    public Project mapNewProjectReqToProject(NewProjectRequest newProjectRequest) {
         Date now = new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(now);
-        calendar.add(Calendar.DAY_OF_YEAR, -1);
 
         now = calendar.getTime();
         SimpleDateFormat dateFormatUp = new SimpleDateFormat("dd MMM yy HH:mm");
@@ -81,4 +84,5 @@ public class MapperService {
                 new ArrayList<Ticket>()
         );
     }
+
 }
