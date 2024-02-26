@@ -1,7 +1,7 @@
 package com.arturrdc.issuescoutbackend.project;
 
-import com.arturrdc.issuescoutbackend.user.TeamMember;
-import com.arturrdc.issuescoutbackend.user.UserDTO;
+import com.arturrdc.issuescoutbackend.user.UserListDTO;
+import com.arturrdc.issuescoutbackend.user.UserSelectionDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -83,10 +83,10 @@ public class ProjectController {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yy HH:mm");
 
         TicketProjectDTO[] tickets = new TicketProjectDTO[]{
-                new TicketProjectDTO(1L, "Fix login bug", "Bug", "High", "Medium", new UserDTO(1L,"John Doe"), "open", dateFormat.format(new Date())),
-                new TicketProjectDTO(2L, "Add dark mode feature", "Feature", "Low", "High", new UserDTO(2L,"Jane Smith"), "in progress", dateFormat.format(new Date())),
-                new TicketProjectDTO(3L, "User feedback on UI", "Comment", "Medium", "Low", new UserDTO(3L,"Alex Jones"), "closed", dateFormat.format(new Date())),
-                new TicketProjectDTO(4L, "Request for API access", "Request", "High", "Medium", new UserDTO(4L,"Sam Wilson"), "open", dateFormat.format(new Date()))
+                new TicketProjectDTO(1L, "Fix login bug", "Bug", "High", "Medium", new UserSelectionDTO(1L,"John Doe"), "open", dateFormat.format(new Date())),
+                new TicketProjectDTO(2L, "Add dark mode feature", "Feature", "Low", "High", new UserSelectionDTO(2L,"Jane Smith"), "in progress", dateFormat.format(new Date())),
+                new TicketProjectDTO(3L, "User feedback on UI", "Comment", "Medium", "Low", new UserSelectionDTO(3L,"Alex Jones"), "closed", dateFormat.format(new Date())),
+                new TicketProjectDTO(4L, "Request for API access", "Request", "High", "Medium", new UserSelectionDTO(4L,"Sam Wilson"), "open", dateFormat.format(new Date()))
         };
 
         Map<String, Object> response = new HashMap<>();
@@ -97,16 +97,16 @@ public class ProjectController {
 
     @GetMapping("/{id}/users")
     public Map<String, Object> getTeamMembers() {
-        TeamMember[] teamMembers = new TeamMember[] {
-                new TeamMember("1","Alex", "https://reqres.in/img/faces/1-image.jpg", "alex@dashwind.com", "Developer", "19 May 2024", "5 hr ago"),
-                new TeamMember("2","Ereena", "https://reqres.in/img/faces/2-image.jpg", "ereena@dashwind.com", "Developer", "18 May 2024", "15 min ago"),
-                new TeamMember("3","John", "https://reqres.in/img/faces/3-image.jpg", "john@dashwind.com", "Developer", "17 May 2024", "20 hr ago"),
-                new TeamMember("4","Matrix", "https://reqres.in/img/faces/4-image.jpg", "matrix@dashwind.com", "Manager", "16 May 2024", "1 hr ago"),
-                new TeamMember("5","Virat", "https://reqres.in/img/faces/5-image.jpg", "virat@dashwind.com", "Submitter", "15 May 2024", "40 min ago"),
-                new TeamMember("6","Miya", "https://reqres.in/img/faces/6-image.jpg", "miya@dashwind.com", "Submitter", "13 May 2024", "5 hr ago")
+        UserListDTO[] userListDTOS = new UserListDTO[] {
+                new UserListDTO("1","Alex", "https://reqres.in/img/faces/1-image.jpg", "alex@dashwind.com", "Developer", "19 May 2024", "5 hr ago"),
+                new UserListDTO("2","Ereena", "https://reqres.in/img/faces/2-image.jpg", "ereena@dashwind.com", "Developer", "18 May 2024", "15 min ago"),
+                new UserListDTO("3","John", "https://reqres.in/img/faces/3-image.jpg", "john@dashwind.com", "Developer", "17 May 2024", "20 hr ago"),
+                new UserListDTO("4","Matrix", "https://reqres.in/img/faces/4-image.jpg", "matrix@dashwind.com", "Manager", "16 May 2024", "1 hr ago"),
+                new UserListDTO("5","Virat", "https://reqres.in/img/faces/5-image.jpg", "virat@dashwind.com", "Submitter", "15 May 2024", "40 min ago"),
+                new UserListDTO("6","Miya", "https://reqres.in/img/faces/6-image.jpg", "miya@dashwind.com", "Submitter", "13 May 2024", "5 hr ago")
         };
         Map<String, Object> response = new HashMap<>();
-        response.put("data", teamMembers);
+        response.put("data", userListDTOS);
         return response;
     }
 

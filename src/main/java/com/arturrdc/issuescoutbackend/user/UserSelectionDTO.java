@@ -1,10 +1,10 @@
 package com.arturrdc.issuescoutbackend.user;
 
-public class UserDTO {
+public class UserSelectionDTO {
     private Long id;
     private String name;
 
-    public UserDTO(Long id, String name) {
+    public UserSelectionDTO(Long id, String name) {
         this.id = id;
         this.name = name;
     }

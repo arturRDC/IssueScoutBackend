@@ -1,6 +1,6 @@
 package com.arturrdc.issuescoutbackend.user;
 
-public class TeamMember {
+public class UserListDTO {
     private String id;
     private String name;
     private String avatar;
@@ -9,7 +9,7 @@ public class TeamMember {
     private String joinedOn;
     private String lastActive;
 
-    public TeamMember(String id, String name, String avatar, String email, String role, String joinedOn, String lastActive) {
+    public UserListDTO(String id, String name, String avatar, String email, String role, String joinedOn, String lastActive) {
         this.id = id;
         this.name = name;
         this.avatar = avatar;

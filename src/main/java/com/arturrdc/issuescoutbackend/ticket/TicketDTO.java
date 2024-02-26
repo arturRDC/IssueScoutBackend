@@ -1,12 +1,12 @@
 package com.arturrdc.issuescoutbackend.ticket;
 
-import com.arturrdc.issuescoutbackend.user.UserDTO;
+import com.arturrdc.issuescoutbackend.user.UserSelectionDTO;
 
 public class TicketDTO {
     private Long id;
     private String title;
     private String desc;
-    private UserDTO assignedTo;
+    private UserSelectionDTO assignedTo;
     private String priority;
     private String difficulty;
     private String type;
@@ -15,7 +15,7 @@ public class TicketDTO {
     private String createdAt;
     private String updatedAt;
 
-    public TicketDTO(Long id, String title, String desc, UserDTO assignedTo, String priority, String difficulty, String type, String submittedBy, String status, String createdAt, String updatedAt) {
+    public TicketDTO(Long id, String title, String desc, UserSelectionDTO assignedTo, String priority, String difficulty, String type, String submittedBy, String status, String createdAt, String updatedAt) {
         this.id = id;
         this.title = title;
         this.desc = desc;
@@ -58,11 +58,11 @@ public class TicketDTO {
         this.desc = desc;
     }
 
-    public UserDTO getAssignedTo() {
+    public UserSelectionDTO getAssignedTo() {
         return assignedTo;
     }
 
-    public void setAssignedTo(UserDTO assignedTo) {
+    public void setAssignedTo(UserSelectionDTO assignedTo) {
         this.assignedTo = assignedTo;
     }
 
