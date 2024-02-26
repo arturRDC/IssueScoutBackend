@@ -3,10 +3,12 @@ package com.arturrdc.issuescoutbackend.project;
 import com.arturrdc.issuescoutbackend.mapper.MapperService;
 import com.arturrdc.issuescoutbackend.user.UserListDTO;
 import com.arturrdc.issuescoutbackend.user.UserSelectionDTO;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
@@ -37,6 +39,19 @@ public class ProjectController {
         response.put("data", pItems);
         return response;
     }
+
+    @PostMapping("")
+    public ResponseEntity<NewProjectRequest> addProject(@Validated @ModelAttribute NewProjectRequest newProjectRequest) {
+        System.out.println("newProjectRequest.getName()");
+        System.out.println(newProjectRequest.getName());
+        System.out.println("newProjectRequest.getDesc()");
+        System.out.println(newProjectRequest.getDesc());
+        Project newProject = mapperService.mapNewProjectReqToRes(newProjectRequest);
+        projectService.createProject(newProject);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newProjectRequest);
+    }
+
+
 
 
     @PostMapping("/{projectId}/addUser/{userId}")

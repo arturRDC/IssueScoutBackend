@@ -38,6 +38,13 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    public User getLoggedInUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Optional<User> optLoggedInUser = userRepository.findByUsername(username);
+        return optLoggedInUser.get();
+    }
+
     public List<User> getUsers() {
         return userRepository.findAll();
     }
@@ -52,13 +59,7 @@ public class UserService {
     void saveUser(User user) {userRepository.save(user);}
 
     public void updateUser(UserUpdateRequest userUpdateRequest) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || !authentication.isAuthenticated()) {
-            return;
-        }
-        String username = authentication.getName();
-        Optional<User> optLoggedInUser = userRepository.findByUsername(username);
-        User loggedInUser = optLoggedInUser.get();
+        User loggedInUser = getLoggedInUser();
         
         loggedInUser.setName(userUpdateRequest.getName());
         loggedInUser.setEmail(userUpdateRequest.getEmail());

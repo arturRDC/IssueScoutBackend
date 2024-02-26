@@ -51,7 +51,7 @@ public class IssueScoutBackendApplication implements CommandLineRunner {
         admin.setRoles(roles);
         userRepository.save(admin);
 
-        Date now = new Date();  // Replace this with your actual Date object
+        Date now = new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(now);
         calendar.add(Calendar.DAY_OF_YEAR, -1);
