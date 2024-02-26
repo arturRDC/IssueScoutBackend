@@ -19,9 +19,9 @@ public class IssueScoutBackendApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        roleRepository.save(new Role(ERole.ROLE_DEVELOPER));
-        roleRepository.save(new Role(ERole.ROLE_ADMIN));
-        roleRepository.save(new Role(ERole.ROLE_MANAGER));
-        roleRepository.save(new Role(ERole.ROLE_SUBMITTER));
+        roleRepository.save(new Role(ERole.Developer));
+        roleRepository.save(new Role(ERole.Admin));
+        roleRepository.save(new Role(ERole.Manager));
+        roleRepository.save(new Role(ERole.Submitter));
     }
 }

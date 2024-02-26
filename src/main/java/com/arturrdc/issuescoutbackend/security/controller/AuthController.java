@@ -11,6 +11,7 @@ import com.arturrdc.issuescoutbackend.security.repository.RoleRepository;
 import com.arturrdc.issuescoutbackend.security.service.UserDetailsImpl;
 import com.arturrdc.issuescoutbackend.user.User;
 import com.arturrdc.issuescoutbackend.user.UserRepository;
+import com.arturrdc.issuescoutbackend.user.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +23,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:3000",maxAge = 3600, allowCredentials = "true")
@@ -36,6 +36,8 @@ public class AuthController {
 
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    UserService userService;
 
     @Autowired
     RoleRepository roleRepository;
@@ -60,6 +62,8 @@ public class AuthController {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
+        userService.setLastActive(loginRequest.getUsername());
+
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
@@ -73,6 +77,12 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+        Date unformattedNow = new Date();
+        SimpleDateFormat df = new SimpleDateFormat("dd MMM yy");
+        SimpleDateFormat preciseDf = new SimpleDateFormat("dd MMM yy hh:mm");
+        String now = df.format(unformattedNow);
+        String preciseNow = preciseDf.format(unformattedNow);
+
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity
                     .badRequest()
@@ -89,38 +99,38 @@ public class AuthController {
         User user = new User(signUpRequest.getUsername(),
                 signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()),
-                signUpRequest.getName(), "");
+                signUpRequest.getName(), "", now);
 
         Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {
-            Role userRole = roleRepository.findByName(ERole.ROLE_DEVELOPER)
+            Role userRole = roleRepository.findByName(ERole.Developer)
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
             roles.add(userRole);
         } else {
             strRoles.forEach(role -> {
                 switch (role) {
                     case "admin":
-                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+                        Role adminRole = roleRepository.findByName(ERole.Admin)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(adminRole);
 
                         break;
                     case "submitter":
-                        Role submitterRole = roleRepository.findByName(ERole.ROLE_SUBMITTER)
+                        Role submitterRole = roleRepository.findByName(ERole.Submitter)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(submitterRole);
 
                         break;
                     case "manager":
-                    Role managerRole = roleRepository.findByName(ERole.ROLE_MANAGER)
+                    Role managerRole = roleRepository.findByName(ERole.Manager)
                             .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                     roles.add(managerRole);
 
                         break;
                     default:
-                        Role userRole = roleRepository.findByName(ERole.ROLE_DEVELOPER)
+                        Role userRole = roleRepository.findByName(ERole.Developer)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(userRole);
                 }
@@ -128,6 +138,7 @@ public class AuthController {
         }
 
         user.setRoles(roles);
+        user.setLastActive(preciseNow);
         userRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));

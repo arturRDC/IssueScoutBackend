@@ -45,12 +45,16 @@ public class User {
 
     private String profilePicture;
 
-    public User(String username, String email, String password, String name, String profilePicture) {
+    private String joinedOn;
+    private String lastActive;
+
+    public User(String username, String email, String password, String name, String profilePicture, String joinedOn) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.name = name;
         this.profilePicture = profilePicture;
+        this.joinedOn = joinedOn;
     }
 
     public User() {
@@ -113,5 +117,21 @@ public class User {
 
     public void setProfilePicture(String profilePicture) {
         this.profilePicture = profilePicture;
+    }
+
+    public String getJoinedOn() {
+        return joinedOn;
+    }
+
+    public void setJoinedOn(String joinedOn) {
+        this.joinedOn = joinedOn;
+    }
+
+    public String getLastActive() {
+        return lastActive;
+    }
+
+    public void setLastActive(String lastActive) {
+        this.lastActive = lastActive;
     }
 }
