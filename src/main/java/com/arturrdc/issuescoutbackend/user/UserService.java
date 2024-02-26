@@ -2,16 +2,24 @@ package com.arturrdc.issuescoutbackend.user;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -23,6 +31,8 @@ public class UserService {
     AuthenticationManager authenticationManager;
     @Autowired
     PasswordEncoder encoder;
+    @Value("${issueScout.app.baseUrl}")
+    private String baseUrl;
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -56,7 +66,12 @@ public class UserService {
             loggedInUser.setPassword(hashPassword(userUpdateRequest.getPassword()));
         }
         if (userUpdateRequest.getProfilePicture() != null && !userUpdateRequest.getProfilePicture().isEmpty()) {
-            String profilePicturePath = saveProfilePicture(userUpdateRequest.getProfilePicture());
+            String profilePicturePath = null;
+            try {
+                profilePicturePath = saveProfilePicture(userUpdateRequest.getProfilePicture());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             loggedInUser.setProfilePicture(profilePicturePath);
         }
 
@@ -67,9 +82,26 @@ public class UserService {
         return encoder.encode(password);
     }
 
-    private String saveProfilePicture(MultipartFile profilePicture) {
-        // Implement file saving logic
-        return "/avatars/1-image.jpg";
+    private String saveProfilePicture(MultipartFile profilePicture) throws IOException {
+        String fileName = StringUtils.cleanPath(Objects.requireNonNull(profilePicture.getOriginalFilename()));
+        String basePath = Paths.get("").toAbsolutePath() + "/files/avatars/";
+
+        // Create the directory if it doesn't exist
+        File directory = new File(basePath);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+
+        String filePath = basePath + fileName;
+        File file = new File(filePath);
+
+        // Copy the file to the destination
+        try (FileOutputStream outputStream = new FileOutputStream(file)) {
+            FileCopyUtils.copy(profilePicture.getInputStream(), outputStream);
+        }
+
+        // Return the URL of the saved file
+        return baseUrl + "/files/avatars/" + fileName;
     }
 
     public void setLastActive(String username) {

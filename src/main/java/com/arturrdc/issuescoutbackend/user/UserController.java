@@ -1,5 +1,6 @@
 package com.arturrdc.issuescoutbackend.user;
 
+import com.arturrdc.issuescoutbackend.mapper.MapperService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -13,11 +14,11 @@ public class UserController {
     final
     UserService userService;
     final
-    UserMapperService userMapperService;
+    MapperService mapperService;
 
-    public UserController(UserService userService, UserMapperService userMapperService) {
+    public UserController(UserService userService, MapperService mapperService) {
         this.userService = userService;
-        this.userMapperService = userMapperService;
+        this.mapperService = mapperService;
     }
 //    private static final String[] TEAM_MEMBERS = {
 //        "Alex,https://reqres.in/img/faces/1-image.jpg,alex@dashwind.com,Developer,19 May 2024,5 hr ago",
@@ -55,7 +56,7 @@ public class UserController {
 //                new UserListDTO("5","Virat", "https://reqres.in/img/faces/5-image.jpg", "virat@dashwind.com", "Submitter", "15 May 24", "40 min ago"),
 //                new UserListDTO("6","Miya", "https://reqres.in/img/faces/6-image.jpg", "miya@dashwind.com", "Submitter", "13 May 24", "5 hr ago")
 //        };
-        List<UserListDTO> userListDTOS = userMapperService.mapUsersToDTOs((userService.getUsers()));
+        List<UserListDTO> userListDTOS = mapperService.mapUsersToDTOs((userService.getUsers()));
         Map<String, Object> response = new HashMap<>();
         response.put("data", userListDTOS);
         return response;
