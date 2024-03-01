@@ -58,9 +58,18 @@ public class IssueScoutBackendApplication implements CommandLineRunner {
         String nowUp = dateFormatUp.format(now);
         String nowCr = dateFormatCr.format(now);
 
-        projectService.createProject(new Project("ProjectA","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam justo erat, feugiat sed commodo nec, varius non risus. Integer aliquet ac risus sit amet volutpat.",admin, nowUp, nowCr, new ArrayList<User>(), new ArrayList<Ticket>()));
+        Project p1 = new Project("ProjectA","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam justo erat, feugiat sed commodo nec, varius non risus. Integer aliquet ac risus sit amet volutpat.",admin, nowUp, nowCr, new ArrayList<User>(), new ArrayList<Ticket>());
+        User u1 = new User("john_doe", "johndoe@gmail.com", "123456", "John Doe", "");
+        userRepository.save(u1);
+        u1.setRoles(Set.of(roleRepository.findByName(ERole.Developer).get()));
+        userRepository.save(u1);
+        p1.setMembers(List.of(admin, u1));
+
+        projectService.createProject(p1);
         projectService.createProject(new Project("ProjectB","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam justo erat, feugiat sed commodo nec, varius non risus. Integer aliquet ac risus sit amet volutpat.",admin, nowUp, nowCr, new ArrayList<User>(), new ArrayList<Ticket>()));
         projectService.createProject(new Project("ProjectC","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam justo erat, feugiat sed commodo nec, varius non risus. Integer aliquet ac risus sit amet volutpat.",admin, nowUp, nowCr, new ArrayList<User>(), new ArrayList<Ticket>()));
+
+
 
     }
 }

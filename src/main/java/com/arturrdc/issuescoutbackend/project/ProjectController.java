@@ -104,17 +104,20 @@ public class ProjectController {
 
 
     @GetMapping("/{id}/users")
-    public Map<String, Object> getTeamMembers() {
-        UserListDTO[] userListDTOS = new UserListDTO[] {
-                new UserListDTO("1","Alex", "https://reqres.in/img/faces/1-image.jpg", "alex@issuescout.com", "Developer", "19 May 2024", "5 hr ago"),
-                new UserListDTO("2","Ereena", "https://reqres.in/img/faces/2-image.jpg", "ereena@issuescout.com", "Developer", "18 May 2024", "15 min ago"),
-                new UserListDTO("3","John", "https://reqres.in/img/faces/3-image.jpg", "john@issuescout.com", "Developer", "17 May 2024", "20 hr ago"),
-                new UserListDTO("4","Matrix", "https://reqres.in/img/faces/4-image.jpg", "matrix@issuescout.com", "Manager", "16 May 2024", "1 hr ago"),
-                new UserListDTO("5","Virat", "https://reqres.in/img/faces/5-image.jpg", "virat@issuescout.com", "Submitter", "15 May 2024", "40 min ago"),
-                new UserListDTO("6","Miya", "https://reqres.in/img/faces/6-image.jpg", "miya@issuescout.com", "Submitter", "13 May 2024", "5 hr ago")
-        };
+    public Map<String, Object> getTeamMembers(@PathVariable Long id) {
+        Project project = projectService.getProjectById(id).get();
+        List<UserListDTO> userListDTO = mapperService.mapUsersToDTOs(project.getMembers());
+
+//        UserListDTO[] userListDTOS = new UserListDTO[] {
+//                new UserListDTO("1","Alex", "https://reqres.in/img/faces/1-image.jpg", "alex@issuescout.com", "Developer", "19 May 2024", "5 hr ago"),
+//                new UserListDTO("2","Ereena", "https://reqres.in/img/faces/2-image.jpg", "ereena@issuescout.com", "Developer", "18 May 2024", "15 min ago"),
+//                new UserListDTO("3","John", "https://reqres.in/img/faces/3-image.jpg", "john@issuescout.com", "Developer", "17 May 2024", "20 hr ago"),
+//                new UserListDTO("4","Matrix", "https://reqres.in/img/faces/4-image.jpg", "matrix@issuescout.com", "Manager", "16 May 2024", "1 hr ago"),
+//                new UserListDTO("5","Virat", "https://reqres.in/img/faces/5-image.jpg", "virat@issuescout.com", "Submitter", "15 May 2024", "40 min ago"),
+//                new UserListDTO("6","Miya", "https://reqres.in/img/faces/6-image.jpg", "miya@issuescout.com", "Submitter", "13 May 2024", "5 hr ago")
+//        };
         Map<String, Object> response = new HashMap<>();
-        response.put("data", userListDTOS);
+        response.put("data", userListDTO);
         return response;
     }
 

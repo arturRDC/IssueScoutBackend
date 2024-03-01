@@ -1,6 +1,7 @@
 package com.arturrdc.issuescoutbackend.project;
 
 import com.arturrdc.issuescoutbackend.project.payload.request.EditProjectRequest;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
