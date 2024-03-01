@@ -1,7 +1,6 @@
 package com.arturrdc.issuescoutbackend.user;
 
 
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -44,6 +43,10 @@ public class UserService {
         String username = authentication.getName();
         Optional<User> optLoggedInUser = userRepository.findByUsername(username);
         return optLoggedInUser.get();
+    }
+
+    public Optional<User> getUser(Long id) {
+        return userRepository.findById(id);
     }
 
     public List<User> getUsers() {

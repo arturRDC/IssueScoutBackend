@@ -1,6 +1,7 @@
 package com.arturrdc.issuescoutbackend.project;
 
 import com.arturrdc.issuescoutbackend.mapper.MapperService;
+import com.arturrdc.issuescoutbackend.project.exception.UnauthorizedProjectEdit;
 import com.arturrdc.issuescoutbackend.project.payload.request.EditProjectRequest;
 import com.arturrdc.issuescoutbackend.project.payload.request.NewProjectRequest;
 import com.arturrdc.issuescoutbackend.project.payload.response.ProjectResponse;
@@ -57,10 +58,14 @@ public class ProjectController {
 
 
     @PostMapping("/{projectId}/addUser/{userId}")
-    public String addUserToProject(@PathVariable Long projectId, @PathVariable Long userId) {
+    public ResponseEntity<String> addUserToProject(@PathVariable Long projectId, @PathVariable Long userId) {
         System.out.println("user " + userId+ " added to project " + projectId);
-//        projectService.addUserToProject(projectId, userId);
-        return "User added to project successfully";
+        try {
+            projectService.addUserToProject(projectId, userId);
+        } catch (UnauthorizedProjectEdit e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unable to add user to project");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("User added to project");
     }
 
 
