@@ -1,19 +1,28 @@
 package com.arturrdc.issuescoutbackend.project;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api/projects")
 public class ProjectController {
+    final
+    ProjectService projectService;
+
+    public ProjectController(ProjectService projectService) {
+        this.projectService = projectService;
+    }
+
+
     @CrossOrigin(origins = "*")
-    @GetMapping("projects")
-    Map<String, Object> getProjects() {
+    @GetMapping("")
+    public Map<String, Object> getProjects() {
         Date now = new Date();  // Replace this with your actual Date object
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(now);
@@ -35,5 +44,21 @@ public class ProjectController {
         Map<String, Object> response = new HashMap<>();
         response.put("data", pItems);
         return response;
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/{projectId}/addUser/{userId}")
+    public String addUserToProject(@PathVariable Long projectId, @PathVariable Long userId) {
+        System.out.println("user " + userId+ " added to project " + projectId);
+//        projectService.addUserToProject(projectId, userId);
+        return "User added to project successfully";
+    }
+
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/{id}/delete")
+    public ResponseEntity<String> deleteProject(@PathVariable("id") Long id) {
+        // ProjectService.deleteProject(id);
+        System.out.println("project "+ id + " deleted");
+        return new ResponseEntity<>("Project with ID " + id + " has been deleted.", HttpStatus.OK);
     }
 }
